@@ -18,19 +18,21 @@ st.title('National Nutrient-Based Meal Planner')
 
 # Select country and year
 country = st.selectbox('Select Country', nutrient_needs_df['Region, subregion, country or area'].unique())
-year = st.selectbox('Select Year', nutrient_needs_df['Year'].unique())
+year = st.selectbox('Select Year', nutrient_needs_df['Year'].unique().astype(str))
 
 # Filter nutrient needs for the selected country and year
 filtered_needs = nutrient_needs_df[(nutrient_needs_df['Region, subregion, country or area'] == country) & 
-                                   (nutrient_needs_df['Year'] == year)]
+                                   (nutrient_needs_df['Year'].astype(str) == year)]
 
 # Retrieve population for the selected country and year
 population_row = population_df[(population_df['Region, subregion, country or area *'] == country)]
-population = population_row[str(year)].values[0] if not population_row.empty else 1  # Default to 1 if data is missing
+population = population_row[year].values[0] if not population_row.empty else 1  # Default to 1 if data is missing
 
 # Calculate daily nutrient needs per citizen
+# Exclude the 'Year' column from calculations
 daily_needs_per_citizen = filtered_needs.copy()
 numeric_columns = daily_needs_per_citizen.select_dtypes(include=['float64', 'int64']).columns
+numeric_columns = numeric_columns.drop('Year', errors='ignore')  # Exclude 'Year' from calculations
 daily_needs_per_citizen[numeric_columns] /= population
 
 # Display the total nutrient needs for the country
@@ -40,6 +42,7 @@ st.write(filtered_needs)
 # Display the per capita daily nutrient needs for the country
 st.subheader(f'Per Capita Average Daily Nutrient Needs for {country} in {year}')
 st.write(daily_needs_per_citizen)
+
 
 # Define food group calorie limits for daily intake
 food_group_calorie_limits = {
