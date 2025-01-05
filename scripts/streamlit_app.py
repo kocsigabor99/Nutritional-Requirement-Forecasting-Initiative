@@ -14,6 +14,11 @@ food_data_df = pd.read_csv(food_data)
 population_df = pd.read_csv(populationstat, encoding='ISO-8859-1')
 
 # Clean up the population dataframe year columns by removing commas
+if not population_df.empty:
+    population_df.columns = population_df.columns.str.replace(',', '', regex=False)
+else:
+    st.error("Population data could not be loaded. Please check the CSV link.")
+# Clean up the population dataframe year columns by removing commas
 population_df.columns = population_df.columns.str.replace(',', '')
 # Retrieve population for the selected country and year
 population_row = population_df[(population_df['Region, subregion, country or area *'] == country)]
