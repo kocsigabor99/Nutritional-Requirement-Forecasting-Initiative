@@ -1,6 +1,6 @@
 # Nutritional Requirement Forecasting Initiative (NRFI)
 
-The Nutritional Requirement Forecasting Initiative (NRFI) aims to estimate the precise micronutrient needs of a country's population for any given year in the future. This tool helps professionals estimate the optimal food mix required to fulfill the micronutrient needs of different populations across various nations.
+The Nutritional Requirement Forecasting Initiative (NRFI) aims to estimate the micronutrient needs of a country's population for any given year in the future. This tool helps professionals estimate the optimal food mix required to fulfill the micronutrient needs of different populations across various nations.
 
 ## Table of Contents
 - [Usage](#usage)
